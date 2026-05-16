@@ -42,9 +42,17 @@ export default function ScrollyTellingCanvas() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Make canvas fill screen coordinates
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Prevent blurriness on Retina screens and iPhones by scaling the internal resolution
+    const dpr = window.devicePixelRatio || 1;
+    const targetWidth = window.innerWidth * dpr;
+    const targetHeight = window.innerHeight * dpr;
+
+    // Performance optimization: ONLY update dimensions if they actually changed.
+    // Setting canvas.width every frame destroys performance and battery life.
+    if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
+      canvas.width = targetWidth;
+      canvas.height = targetHeight;
+    }
 
     const img = imagesRef.current[index];
     if (img && img.complete) {
@@ -62,7 +70,7 @@ export default function ScrollyTellingCanvas() {
         offsetX = (canvas.width - drawWidth) / 2;
         // Shift it slightly up on mobile so it doesn't get covered by bottom text
         offsetY = (canvas.height - drawHeight) / 2 - (canvas.height * 0.05);
-      } 
+      }
       // Desktop View: Use "Cover" logic for an immersive full-screen feel
       else {
         if (canvasRatio > imgRatio) {
@@ -106,9 +114,8 @@ export default function ScrollyTellingCanvas() {
     <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
       {/* Loading Overlay */}
       <div
-        className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#050505] transition-opacity duration-500 ${
-          imagesLoaded >= 1 ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
+        className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#050505] transition-opacity duration-500 ${imagesLoaded >= 1 ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
       >
         <div className="w-10 h-10 border-4 border-white/10 border-t-[#00D6FF] rounded-full animate-spin mb-4"></div>
         <p className="text-white/60 font-medium">Loading Experience...</p>
