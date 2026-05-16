@@ -1,5 +1,6 @@
 import ScrollyTellingCanvas from "@/components/ScrollyTellingCanvas";
 import TextOverlays from "@/components/TextOverlays";
+import AutoScrollDemo from "@/components/AutoScrollDemo";
 
 export default function Home() {
   return (
@@ -8,6 +9,7 @@ export default function Home() {
       {/* The canvas and text overlays are fixed positioned within these components */}
       <ScrollyTellingCanvas />
       <TextOverlays />
+      <AutoScrollDemo />
 
       {/* 
         This div creates the scrollable area.

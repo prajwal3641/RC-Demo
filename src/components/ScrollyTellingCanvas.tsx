@@ -53,16 +53,29 @@ export default function ScrollyTellingCanvas() {
 
       let drawWidth, drawHeight, offsetX, offsetY;
 
-      if (canvasRatio > imgRatio) {
-        drawWidth = canvas.width;
-        drawHeight = canvas.width / imgRatio;
-        offsetX = 0;
-        offsetY = (canvas.height - drawHeight) / 2;
-      } else {
-        drawHeight = canvas.height;
-        drawWidth = canvas.height * imgRatio;
-        offsetY = 0;
+      // Mobile View: Use "Contain" logic so the entire car fits on a narrow screen
+      if (window.innerWidth < 768) {
+        // We set the width to 120% of the screen width just to make sure the car is prominent,
+        // but completely visible (compared to "cover" which makes it 400% wider and crops it).
+        drawWidth = canvas.width * 1.2;
+        drawHeight = drawWidth / imgRatio;
         offsetX = (canvas.width - drawWidth) / 2;
+        // Shift it slightly up on mobile so it doesn't get covered by bottom text
+        offsetY = (canvas.height - drawHeight) / 2 - (canvas.height * 0.05);
+      } 
+      // Desktop View: Use "Cover" logic for an immersive full-screen feel
+      else {
+        if (canvasRatio > imgRatio) {
+          drawWidth = canvas.width;
+          drawHeight = canvas.width / imgRatio;
+          offsetX = 0;
+          offsetY = (canvas.height - drawHeight) / 2;
+        } else {
+          drawHeight = canvas.height;
+          drawWidth = canvas.height * imgRatio;
+          offsetY = 0;
+          offsetX = (canvas.width - drawWidth) / 2;
+        }
       }
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
