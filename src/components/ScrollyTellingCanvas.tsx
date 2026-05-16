@@ -11,8 +11,14 @@ export default function ScrollyTellingCanvas() {
 
   const { scrollYProgress } = useScroll();
 
-  // Preload Images
+  // Preload Images and handle initial setup
   useEffect(() => {
+    // Force the browser to always start at the absolute top on reload
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+
     const images: HTMLImageElement[] = [];
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
