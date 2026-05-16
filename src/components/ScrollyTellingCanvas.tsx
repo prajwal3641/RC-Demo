@@ -71,16 +71,16 @@ export default function ScrollyTellingCanvas() {
     }
   };
 
-  // Initially render the first frame when loaded
+  // Initially render the first frame as soon as it's loaded
   useEffect(() => {
-    if (imagesLoaded === frameCount) {
+    if (imagesLoaded >= 1) {
       renderFrame(0);
     }
   }, [imagesLoaded]);
 
   // Hook into Framer Motion scroll progress
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    if (imagesLoaded !== frameCount) return;
+    // Don't wait for all frames. If a frame isn't loaded, it will just keep showing the previous one.
     const frameIndex = Math.min(
       frameCount - 1,
       Math.floor(latest * frameCount)
@@ -94,7 +94,7 @@ export default function ScrollyTellingCanvas() {
       {/* Loading Overlay */}
       <div
         className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-[#050505] transition-opacity duration-500 ${
-          imagesLoaded === frameCount ? "opacity-0 pointer-events-none" : "opacity-100"
+          imagesLoaded >= 1 ? "opacity-0 pointer-events-none" : "opacity-100"
         }`}
       >
         <div className="w-10 h-10 border-4 border-white/10 border-t-[#00D6FF] rounded-full animate-spin mb-4"></div>
