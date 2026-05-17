@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
+import Link from "next/link";
 
 export default function Navbar() {
   const { scrollY } = useScroll();
@@ -21,8 +22,14 @@ export default function Navbar() {
       className="fixed top-0 left-0 w-full z-[100] border-b border-transparent py-4"
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 md:px-10">
-        <div className="text-[1.1rem] font-semibold tracking-tight text-white/90">
-          Off-Road RC SUV
+        <div className="flex items-center gap-6">
+          <Link href="/" className="text-[1.1rem] font-semibold tracking-tight text-white/90 hover:text-white transition-colors">
+            RC Crawler
+          </Link>
+          <div className="w-px h-4 bg-white/20" />
+          <Link href="/ford" className="text-[1.1rem] font-semibold tracking-tight text-white/50 hover:text-white transition-colors">
+            Ford F-150
+          </Link>
         </div>
         
         <div className="hidden md:flex gap-8">

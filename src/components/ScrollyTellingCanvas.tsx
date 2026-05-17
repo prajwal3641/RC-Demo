@@ -3,7 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useScroll, useMotionValueEvent } from "framer-motion";
 
-export default function ScrollyTellingCanvas() {
+interface ScrollyTellingCanvasProps {
+  folderPath?: string;
+}
+
+export default function ScrollyTellingCanvas({ folderPath = "/frames" }: ScrollyTellingCanvasProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [imagesLoaded, setImagesLoaded] = useState(0);
   const frameCount = 240;
@@ -23,7 +27,7 @@ export default function ScrollyTellingCanvas() {
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
       const frameNum = i.toString().padStart(3, "0");
-      img.src = `/frames/ezgif-frame-${frameNum}.jpg`;
+      img.src = `${folderPath}/ezgif-frame-${frameNum}.jpg`;
 
       img.onload = () => {
         setImagesLoaded((prev) => prev + 1);
