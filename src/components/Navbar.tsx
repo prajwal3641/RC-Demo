@@ -30,6 +30,10 @@ export default function Navbar() {
           <Link href="/ford" className="text-[1.1rem] font-semibold tracking-tight text-white/50 hover:text-white transition-colors">
             Ford F-150
           </Link>
+          <div className="w-px h-4 bg-white/20" />
+          <Link href="/rlaarlo" className="text-[1.1rem] font-semibold tracking-tight text-white/50 hover:text-white transition-colors">
+            Rlaarlo
+          </Link>
         </div>
         
         <div className="hidden md:flex gap-8">
